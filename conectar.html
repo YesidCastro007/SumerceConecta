@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Productos Agrícolas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0fdf4;
+            /* bg-green-50 */
+            color: #1f2937;
+            /* text-gray-800 */
+            line-height: 1.5;
+        }
+
+        header {
+            background-color: #16a34a;
+            /* bg-green-600 */
+            color: #ffffff;
+            /* text-white */
+            text-align: center;
+            padding: 1rem;
+            /* py-4 */
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            /* text-2xl */
+            font-weight: 700;
+            /* font-bold */
+        }
+
+        header p {
+            font-size: 1rem;
+            /* text-base */
+            margin-top: 0.5rem;
+            /* mt-2 */
+        }
+
+        main {
+            max-width: 1280px;
+            /* max-w-5xl */
+            margin: 0 auto;
+            padding: 1rem;
+            /* p-4 */
+        }
+
+        section {
+            margin: 1rem 0;
+            /* my-4 */
+        }
+
+        h2,
+        h3 {
+            font-size: 1.25rem;
+            /* text-lg */
+            font-weight: 600;
+            /* font-semibold */
+            color: #1f2937;
+            /* text-gray-800 */
+            text-align: center;
+        }
+
+        #search-section input {
+            width: 100%;
+            padding: 0.5rem;
+            /* p-2 */
+            border: 1px solid #d1d5db;
+            /* border-gray-300 */
+            border-radius: 0.375rem;
+            /* rounded-md */
+            font-size: 0.875rem;
+            /* sm:text-sm */
+            margin-top: 0.75rem;
+            /* mt-3 */
+        }
+
+        #search-section input:focus {
+            outline: none;
+            border-color: #22c55e;
+            /* focus:border-green-500 */
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+            /* focus:ring-green-500 */
+        }
+
+        #cart-section {
+            background-color: #ffffff;
+            /* bg-white */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* shadow-lg */
+            padding: 1rem;
+            /* p-4 */
+        }
+
+        #cart-items {
+            margin-top: 1rem;
+            /* mt-4 */
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            /* space-y-4 */
+        }
+
+        #cart-total {
+            font-size: 1rem;
+            /* text-base */
+            font-weight: 700;
+            /* font-bold */
+            color: #16a34a;
+            /* text-green-600 */
+            margin-top: 1rem;
+            /* mt-4 */
+            text-align: center;
+        }
+
+        .cart-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            /* gap-4 */
+            margin-top: 1rem;
+            /* mt-4 */
+            justify-content: center;
+        }
+
+        .cart-buttons button {
+            padding: 0.5rem 1rem;
+            /* px-4 py-2 */
+            border-radius: 0.375rem;
+            /* rounded-lg */
+            font-size: 0.875rem;
+            /* text-sm */
+            color: #ffffff;
+            /* text-white */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            /* transition */
+        }
+
+        .cart-buttons button:first-child {
+            background-color: #dc2626;
+            /* bg-red-600 */
+        }
+
+        .cart-buttons button:first-child:hover {
+            background-color: #b91c1c;
+            /* hover:bg-red-700 */
+        }
+
+        .cart-buttons button:last-child {
+            background-color: #16a34a;
+            /* bg-green-600 */
+        }
+
+        .cart-buttons button:last-child:hover {
+            background-color: #15803d;
+            /* hover:bg-green-700 */
+        }
+
+        #products {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            /* gap-4 */
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            /* bg-white */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* shadow-lg */
+            overflow: hidden;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 12rem;
+            /* h-48 */
+            object-fit: cover;
+        }
+
+        .product-card>div {
+            padding: 1rem;
+            /* p-4 */
+        }
+
+        .product-card h3 {
+            font-size: 1.125rem;
+            /* text-lg */
+            font-weight: 600;
+            /* font-semibold */
+            color: #1f2937;
+            /* text-gray-800 */
+            text-align: left;
+        }
+
+        .product-card p.description {
+            font-size: 0.875rem;
+            /* text-sm */
+            color: #4b5563;
+            /* text-gray-600 */
+            margin-top: 0.5rem;
+            /* mt-2 */
+        }
+
+        .product-card p.price {
+            font-size: 1rem;
+            /* text-base */
+            font-weight: 700;
+            /* font-bold */
+            color: #16a34a;
+            /* text-green-600 */
+            margin-top: 0.5rem;
+            /* mt-2 */
+        }
+
+        .product-card .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            /* gap-2 */
+            margin-top: 0.75rem;
+            /* mt-3 */
+        }
+
+        .product-card button {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            /* px-4 py-2 */
+            border-radius: 0.375rem;
+            /* rounded-lg */
+            font-size: 0.875rem;
+            /* text-sm */
+            color: #ffffff;
+            /* text-white */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            /* transition */
+        }
+
+        .product-card button:first-child {
+            background-color: #16a34a;
+            /* bg-green-600 */
+        }
+
+        .product-card button:first-child:hover {
+            background-color: #15803d;
+            /* hover:bg-green-700 */
+        }
+
+        .product-card button:last-child {
+            background-color: #2563eb;
+            /* bg-blue-600 */
+        }
+
+        .product-card button:last-child:hover {
+            background-color: #1d4ed8;
+            /* hover:bg-blue-700 */
+        }
+
+        .why-choose-us ul {
+            margin-top: 0.75rem;
+            /* mt-3 */
+            color: #4b5563;
+            /* text-gray-600 */
+            font-size: 0.875rem;
+            /* text-sm */
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            /* space-y-2 */
+        }
+
+        footer {
+            background-color: #16a34a;
+            /* bg-green-600 */
+            color: #ffffff;
+            /* text-white */
+            text-align: center;
+            padding: 0.75rem;
+            /* py-3 */
+            font-size: 0.875rem;
+            /* text-sm */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            max-width: 90%;
+            width: 500px;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-content button {
+            padding: 0.5rem 1rem;
+            background-color: #dc2626;
+            color: #ffffff;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .modal-content button:hover {
+            background-color: #b91c1c;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive styles */
+        @media (min-width: 640px) {
+            header {
+                padding: 1.5rem;
+                /* sm:py-6 */
+            }
+
+            header h1 {
+                font-size: 1.875rem;
+                /* sm:text-3xl */
+            }
+
+            header p {
+                font-size: 1.125rem;
+                /* sm:text-lg */
+            }
+
+            main {
+                padding: 1.5rem;
+                /* sm:p-6 */
+            }
+
+            section {
+                margin: 1.5rem 0;
+                /* sm:my-6 */
+            }
+
+            h2,
+            h3 {
+                font-size: 1.5rem;
+                /* sm:text-xl */
+            }
+
+            #search-section input {
+                font-size: 0.875rem;
+                /* sm:text-sm */
+            }
+
+            #cart-section {
+                padding: 1.5rem;
+                /* sm:p-6 */
+            }
+
+            #cart-total {
+                font-size: 1.125rem;
+                /* sm:text-lg */
+            }
+
+            .cart-buttons {
+                flex-direction: row;
+            }
+
+            .cart-buttons button {
+                font-size: 1rem;
+                /* sm:text-base */
+            }
+
+            #products {
+                grid-template-columns: repeat(2, 1fr);
+                /* sm:grid-cols-2 */
+            }
+
+            .product-card img {
+                height: 16rem;
+                /* sm:h-64 */
+            }
+
+            .product-card h3 {
+                font-size: 1.25rem;
+                /* sm:text-xl */
+            }
+
+            .product-card p.description {
+                font-size: 1rem;
+                /* sm:text-base */
+            }
+
+            .product-card p.price {
+                font-size: 1.125rem;
+                /* sm:text-lg */
+            }
+
+            .product-card .buttons {
+                flex-direction: row;
+            }
+
+            .product-card button {
+                font-size: 1rem;
+                /* sm:text-base */
+            }
+
+            .why-choose-us ul {
+                margin-top: 1rem;
+                /* sm:mt-4 */
+                font-size: 1rem;
+                /* sm:text-base */
+            }
+
+            footer {
+                padding: 1rem;
+                /* sm:py-4 */
+                font-size: 1rem;
+                /* sm:text-base */
+            }
+        }
+
+        @media (min-width: 768px) {
+            header h1 {
+                font-size: 2.25rem;
+                /* md:text-4xl */
+            }
+
+            h2,
+            h3 {
+                font-size: 1.75rem;
+                /* md:text-2xl */
+            }
+
+            #products {
+                grid-template-columns: repeat(3, 1fr);
+                /* md:grid-cols-3 */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>¡Productos Agrícolas Frescos!</h1>
+        <p>Directo del campo a tu mesa</p>
+    </header>
+    <main>
+        <section id="search-section">
+            <h2>Busca tu producto</h2>
+            <input type="text" id="search" placeholder="Ej. Tomates, Aguacates..."
+                aria-label="Buscar productos agrícolas">
+        </section>
+        <section id="cart-section" class="hidden">
+            <h2>Carro de Compras</h2>
+            <div id="cart-items"></div>
+            <p id="cart-total">Total: $0</p>
+            <div class="cart-buttons">
+                <button onclick="clearCart()" role="button" aria-label="Vaciar carro de compras">Vaciar Carro</button>
+                <button onclick="proceedToOrder()" role="button" aria-label="Proceder al formulario">Proceder al
+                    Pedido</button>
+            </div>
+        </section>
+        <section id="products">
+            <!-- Productos se generan dinámicamente con JavaScript -->
+        </section>
+        <section class="why-choose-us">
+            <h3>¿Por qué elegirnos?</h3>
+            <ul>
+                <li>🌱 100% orgánico y local</li>
+                <li>🚚 Entrega rápida en tu zona</li>
+                <li>😊 Atención personalizada</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>Contáctanos: +123 456 7890 | huerta.fresca@email.com</p>
+    </footer>
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <img id="modal-image" src="" alt="">
+            <p id="modal-description"></p>
+            <p id="modal-price"></p>
+            <p id="modal-features"></p>
+            <p id="modal-creator"></p>
+            <button onclick="closeModal()" role="button" aria-label="Cerrar detalles del producto">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Lista de productos agrícolas (precios en pesos)
+        const products = [
+            {
+                name: "Tomates",
+                price: 10000,
+                description: "Frescos, orgánicos y perfectos para ensaladas.",
+                image: "img/5.jpg",
+                features: "Orgánico, cosechado localmente, sin pesticidas",
+                creatorHistory: "Cosechado por la familia Gómez, con 20 años de experiencia en agricultura orgánica en el valle."
+            },
+            {
+                name: "Aguacates",
+                price: 15000,
+                description: "Cremosos y llenos de sabor, ideales para cualquier plato.",
+                image: "img/6.jpg",
+                features: "Variedad Hass, maduración natural",
+                creatorHistory: "Producido por Don Miguel, agricultor apasionado por los cultivos sostenibles."
+            },
+            {
+                name: "Lechugas",
+                price: 5000,
+                description: "Crujientes y frescas, directas de la huerta.",
+                image: "img/7.jpg",
+                features: "Hidropónica, libre de químicos",
+                creatorHistory: "Cultivada por la cooperativa VerdeVida, comprometida con la agricultura ecológica."
+            }
+        ];
+
+        // Cargar carro desde localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Función para mostrar productos
+        function displayProducts(filteredProducts) {
+            const productsContainer = document.getElementById('products');
+            productsContainer.innerHTML = '';
+            filteredProducts.forEach(product => {
+                const productCard = `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p class="description">${product.description}</p>
+                            <p class="price">$${product.price.toLocaleString()} / unidad</p>
+                            <div class="buttons">
+                                <button onclick="selectProduct('${product.name}')" role="button" aria-label="Ver detalles de ${product.name}">Seleccionar</button>
+                                <button onclick='addToCart(${JSON.stringify(product)})' role="button" aria-label="Añadir ${product.name} al carro">Añadir al Carro</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                productsContainer.innerHTML += productCard;
+            });
+        }
+
+        // Función para filtrar productos
+        function filterProducts() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            displayProducts(filteredProducts);
+        }
+
+        // Función para seleccionar un producto y mostrar detalles en modal
+        function selectProduct(productName) {
+            const product = products.find(p => p.name === productName);
+            if (product) {
+                document.getElementById('modal-title').textContent = product.name;
+                document.getElementById('modal-image').src = product.image;
+                document.getElementById('modal-image').alt = product.name;
+                document.getElementById('modal-description').textContent = `Descripción: ${product.description}`;
+                document.getElementById('modal-price').textContent = `Precio: $${product.price.toLocaleString()} / unidad`;
+                document.getElementById('modal-features').textContent = `Características: ${product.features}`;
+                document.getElementById('modal-creator').textContent = `Historia: ${product.creatorHistory}`;
+                document.getElementById('product-modal').style.display = 'flex';
+            }
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
+        // Función para añadir al carro
+        function addToCart(product) {
+            const existingItem = cart.find(item => item.name === product.name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        // Función para actualizar el carro
+        function updateCart() {
+            const cartContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            cartContainer.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                const cartItem = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #d1d5db;">
+                        <div>
+                            <p style="font-size: 0.875rem;">${item.name} (x${item.quantity})</p>
+                            <p style="font-size: 0.875rem; color: #16a34a;">$${item.price.toLocaleString() * item.quantity}</p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" style="padding: 0.25rem 0.5rem; background-color: #dc2626; color: #ffffff; border-radius: 0.375rem; font-size: 0.875rem; cursor: pointer;" role="button" aria-label="Eliminar ${item.name} del carro">Eliminar</button>
+                    </div>
+                `;
+                cartContainer.innerHTML += cartItem;
+            });
+            cartTotal.textContent = `Total: $${total.toLocaleString()}`;
+            document.getElementById('cart-section').classList.remove('hidden');
+            if (cart.length === 0) {
+                document.getElementById('cart-section').classList.add('hidden');
+            }
+        }
+
+        // Función para eliminar un producto del carro
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        // Función para vaciar el carro
+        function clearCart() {
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        // Función para proceder al formulario
+        function proceedToOrder() {
+            if (cart.length === 0) {
+                alert('El carro está vacío. Añade productos antes de proceder.');
+                return;
+            }
+            alert('Procesando pedido... Por favor, contacta a huerta.fresca@email.com para finalizar tu orden.');
+            // Aquí podrías implementar un formulario dinámico en el futuro
+        }
+
+        // Inicializar productos y carro
+        displayProducts(products);
+        updateCart();
+
+        // Escuchar cambios en el buscador
+        document.getElementById('search').addEventListener('input', filterProducts);
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('product-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('product-modal')) {
+                closeModal();
+            }
+        });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('product-modal').style.display === 'flex') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

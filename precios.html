@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precios de Frutas, Verduras e Insumos - 17 Mayo 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #efe6d5;
+            color: #5c4033;
+            padding: 1rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: #f8f4e9;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #1a3c34;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+
+        .controls select,
+        .controls button {
+            padding: 0.7rem;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            border: 1px solid #a65c3d;
+            background: #efe6d5;
+            cursor: pointer;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .controls button {
+            background: #2e7d32;
+            color: #f8f4e9;
+            border: none;
+            transition: background 0.3s;
+        }
+
+        .controls button:hover {
+            background: #1b5e20;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            background: #f8f4e9;
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #a65c3d;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: #2e7d32;
+            color: #f8f4e9;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #e0d8c3;
+        }
+
+        /* Pantallas pequeñas (móviles, hasta 600px) */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .controls select,
+            .controls button {
+                font-size: 0.9rem;
+                padding: 0.6rem;
+                max-width: 100%;
+            }
+
+            th,
+            td {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
+        }
+
+        /* Pantallas medianas (tabletas, 601px - 900px) */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .container {
+                max-width: 90%;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .controls {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .controls select,
+            .controls button {
+                font-size: 0.9rem;
+                max-width: 180px;
+            }
+
+            th,
+            td {
+                font-size: 0.9rem;
+                padding: 0.7rem;
+            }
+        }
+
+        /* Pantallas grandes (escritorios, más de 900px) */
+        @media (min-width: 901px) {
+            .container {
+                max-width: 1200px;
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .controls select,
+            .controls button {
+                font-size: 1rem;
+                max-width: 200px;
+            }
+
+            th,
+            td {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" role="main">
+        <h1>Precios de Frutas, Verduras e Insumos - 17 Mayo 2025</h1>
+        <div class="controls" role="region" aria-label="Controles de filtrado y accesibilidad">
+            <select id="filterType" aria-label="Filtrar por tipo de producto">
+                <option value="all">Todos</option>
+                <option value="fruta">Frutas</option>
+                <option value="verdura">Verduras</option>
+                <option value="insumo">Insumos</option>
+            </select>
+            <button id="speakButton" aria-label="Escuchar precios">Escuchar Precios</button>
+        </div>
+        <div class="table-wrapper">
+            <table id="priceTable" role="grid" aria-live="polite">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Tipo</th>
+                        <th>Precio (COP)</th>
+                        <th>Unidad</th>
+                    </tr>
+                </thead>
+                <tbody id="priceTableBody">
+                    <!-- Datos generados por JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            { name: "Tomate", type: "fruta", price: 6500, unit: "kg" },
+            { name: "Cebolla", type: "verdura", price: 5800, unit: "kg" },
+            { name: "Papa", type: "verdura", price: 4000, unit: "kg" },
+            { name: "Plátano", type: "fruta", price: 5000, unit: "kg" },
+            { name: "Banano", type: "fruta", price: 4200, unit: "kg" },
+            { name: "Yuca", type: "verdura", price: 3300, unit: "kg" },
+            { name: "Arroz", type: "verdura", price: 7800, unit: "kg" },
+            { name: "Café", type: "fruta", price: 46000, unit: "kg" },
+            { name: "Fertilizante NPK 15-15-15", type: "insumo", price: 120000, unit: "saco 50kg" },
+            { name: "Semillas de Maíz", type: "insumo", price: 25000, unit: "kg" },
+            { name: "Pesticida Orgánico", type: "insumo", price: 45000, unit: "litro" }
+        ];
+
+        function renderTable(filter = "all") {
+            const tbody = document.getElementById("priceTableBody");
+            tbody.innerHTML = "";
+            const filteredData = filter === "all" ? data : data.filter(item => item.type === filter);
+            filteredData.forEach(item => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</td>
+                    <td>${item.price.toLocaleString("es-CO")}</td>
+                    <td>${item.unit}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        document.getElementById("filterType").addEventListener("change", (e) => {
+            renderTable(e.target.value);
+        });
+
+        document.getElementById("speakButton").addEventListener("click", () => {
+            const utterance = new SpeechSynthesisUtterance();
+            let text = "Precios de productos agrícolas para el 17 de mayo de 2025:\n";
+            data.forEach(item => {
+                text += `${item.name}, tipo ${item.type}, precio ${item.price.toLocaleString("es-CO")} pesos por ${item.unit}.\n`;
+            });
+            utterance.text = text;
+            utterance.lang = "es-ES";
+            speechSynthesis.speak(utterance);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderTable();
+        });
+    </script>
+</body>
+
+</html>
