@@ -6,24 +6,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SumerceConecta - Red Social para Campesinos</title>
   <link rel="stylesheet" href="estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="particles"></div>
+  
+  <nav class="navbar">
+    <div class="logo">🌾 SumerceConecta</div>
+    <ul class="nav-links">
+      <li><a href="registro.html" class="nav-btn">Registro</a></li>
+      <li><a href="precios.html" class="nav-btn">Información</a></li>
+      <li><a href="conectar.html" class="nav-btn conecta-btn">Conecta</a></li>
+    </ul>
+  </nav>
+
   <header class="hero">
-    <div class="navbar">
-      <ul>
-        <li><a href="registro.html">Registro</a></li>
-        <li><a href="precios.html">Información</a></li>
-        <li><a href="conectar.html">Conecta</a></li>
-      </ul>
+    <div class="hero-content">
+      <div class="badge">🚀 Comercio Directo</div>
+      <h1 class="hero-title">
+        <span class="gradient-text">Conectamos</span><br>
+        <span class="outline-text">El Campo</span><br>
+        <span class="gradient-text">Con Tu Mesa</span>
+      </h1>
+      <p class="hero-subtitle">Unimos campesinos, clientes y transportadores en una plataforma revolucionaria sin intermediarios</p>
+      <div class="cta-buttons">
+        <a href="registro.html" class="btn-primary">Comenzar Ahora</a>
+        <a href="#features" class="btn-secondary">Descubre Más</a>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Campesinos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1000+</div>
+          <div class="stat-label">Clientes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Directo</div>
+        </div>
+      </div>
     </div>
-    <div class="banner">
-      <h1>Bienvenidos a SumerceConecta</h1>
-      <p>Conectamos campesinos, clientes y transportadores para un comercio justo y sin intermediarios.</p>
+    <div class="hero-image">
+      <div class="floating-card card-1">🌱 Productos Frescos</div>
+      <div class="floating-card card-2">🚚 Envío Rápido</div>
+      <div class="floating-card card-3">💚 Comercio Justo</div>
     </div>
   </header>
 
   <button class="accessibility-btn" onclick="readPageContent()" aria-label="Escuchar descripción de la página de SumerceConecta">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/audio-wave--v1.png" alt="Icono de voz" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+    </svg>
   </button>
 
   <script src="script.js"></script>
