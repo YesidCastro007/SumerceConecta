@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro - SumerceConecta</title>
+  <link rel="stylesheet" href="formulario.css" />
+</head>
+<body>
+  <section class="login-panel" id="loginPanel">
+    <div class="button-container">
+      <a class="login-button" onclick="showLoginForm()">Iniciar Sesión / Registrarse</a>
+    </div>
+    <div class="form-container" id="loginFormContainer">
+      <h2>Formulario de Login</h2>
+      <div class="form-group">
+        <label for="user-id">ID Identificación</label>
+        <input type="text" id="user-id" placeholder="Ej: usuario123" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" placeholder="Ingresa tu contraseña" required />
+      </div>
+      <button onclick="handleLogin()">Iniciar Sesión / Registrarse</button>
+    </div>
+    <div class="form-container" id="profileFormContainer">
+      <h2>¿Quién eres?</h2>
+      <div class="form-group">
+        <label for="profile-type">Selecciona tu perfil</label>
+        <select id="profile-type" required>
+          <option value="">Selecciona una opción</option>
+          <option value="agricultor">Agricultor</option>
+          <option value="comprador">Comprador</option>
+          <option value="movilidad">Movilidad</option>
+        </select>
+      </div>
+      <button onclick="handleProfileSelection()">Confirmar</button>
+    </div>
+  </section>
+  <section class="form-container" id="farmerPanel" style="display:none">
+    <h2>Registro Agricultor</h2>
+    <div class="form-group">
+      <label for="farmer-name">Nombre Completo</label>
+      <input type="text" id="farmer-name" required />
+    </div>
+    <div class="form-group">
+      <label for="farmer-location">Ubicación</label>
+      <input type="text" id="farmer-location" required />
+    </div>
+    <div class="form-group">
+      <label for="farmer-products">Productos que cultiva</label>
+      <input type="text" id="farmer-products" placeholder="Ej: Café, Plátano" required />
+    </div>
+    <button onclick="saveFarmer()">Registrar</button>
+  </section>
+  <section class="form-container" id="buyerPanel" style="display:none">
+    <h2>Registro Comprador</h2>
+    <div class="form-group">
+      <label for="buyer-name">Nombre Completo</label>
+      <input type="text" id="buyer-name" required />
+    </div>
+    <div class="form-group">
+      <label for="buyer-business">Nombre del Negocio</label>
+      <input type="text" id="buyer-business" required />
+    </div>
+    <div class="form-group">
+      <label for="buyer-location">Ubicación</label>
+      <input type="text" id="buyer-location" required />
+    </div>
+    <button onclick="saveBuyer()">Registrar</button>
+  </section>
+  <section class="form-container" id="mobilityPanel" style="display:none">
+    <h2>Registro Movilidad</h2>
+    <div class="form-group">
+      <label for="mobility-name">Nombre Completo</label>
+      <input type="text" id="mobility-name" required />
+    </div>
+    <div class="form-group">
+      <label for="mobility-vehicle">Tipo de Vehículo</label>
+      <input type="text" id="mobility-vehicle" required />
+    </div>
+    <div class="form-group">
+      <label for="mobility-plate">Placa</label>
+      <input type="text" id="mobility-plate" required />
+    </div>
+    <button onclick="saveMobility()">Registrar</button>
+  </section>
+  <script src="formulario.js"></script>
+</body>
+</html>
