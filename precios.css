@@ -1,0 +1,274 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #5a7c3e 0%, #8b6f47 100%);
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+}
+
+body::before {
+  content: '💰';
+  position: absolute;
+  font-size: 250px;
+  opacity: 0.03;
+  top: -30px;
+  right: -30px;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(3deg); }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 3px solid #8b6f47;
+}
+
+h1 {
+  color: #5a7c3e;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.date-display {
+  text-align: center;
+  color: #8b6f47;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls select,
+.controls button,
+.controls input {
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 2px solid #d4c5a9;
+  background: #fff8e7;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.controls select:focus,
+.controls input:focus {
+  outline: none;
+  border-color: #5a7c3e;
+  box-shadow: 0 0 0 4px rgba(90, 124, 62, 0.1);
+}
+
+.controls button {
+  background: linear-gradient(135deg, #5a7c3e 0%, #4a6c2e 100%);
+  color: #fff8e7;
+  border: none;
+  box-shadow: 0 4px 15px rgba(90, 124, 62, 0.3);
+}
+
+.controls button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(90, 124, 62, 0.5);
+}
+
+.btn-update {
+  background: linear-gradient(135deg, #d97d3a 0%, #c46d2a 100%) !important;
+  box-shadow: 0 4px 15px rgba(217, 125, 58, 0.3) !important;
+}
+
+.btn-update:hover {
+  box-shadow: 0 6px 20px rgba(217, 125, 58, 0.5) !important;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+th {
+  background: linear-gradient(135deg, #5a7c3e 0%, #4a6c2e 100%);
+  color: #fff8e7;
+  padding: 1.2rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #e8dcc4;
+  color: #2d3319;
+  font-size: 0.95rem;
+}
+
+tr:hover {
+  background: #f5f1e8;
+}
+
+.price-cell {
+  font-weight: 700;
+  color: #5a7c3e;
+  font-size: 1.1rem;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.type-fruta {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.type-verdura {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.type-insumo {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.source-info {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border: 2px solid #5a7c3e;
+  text-align: center;
+}
+
+.source-info p {
+  color: #2d3319;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #5a7c3e;
+}
+
+.spinner {
+  border: 4px solid #e8dcc4;
+  border-top: 4px solid #5a7c3e;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.api-info {
+  background: #f5f1e8;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+  border: 2px solid #d4c5a9;
+}
+
+.api-info h3 {
+  color: #5a7c3e;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.api-info p {
+  color: #5a5a4a;
+  line-height: 1.8;
+  margin-bottom: 0.8rem;
+}
+
+.price-range {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.price-min {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.price-max {
+  color: #c62828;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls select,
+  .controls button,
+  .controls input {
+    width: 100%;
+  }
+
+  th, td {
+    padding: 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
