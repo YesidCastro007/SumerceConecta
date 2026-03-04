@@ -1,5 +1,7 @@
 function showLoginForm() {
-  document.getElementById('loginFormContainer').style.display = 'block';
+  const loginForm = document.getElementById('loginFormContainer');
+  loginForm.classList.add('active');
+  document.querySelector('.login-button').style.display = 'none';
 }
 
 function handleLogin() {
@@ -23,14 +25,12 @@ function handleLogin() {
   } else {
     localStorage.setItem('currentUserId', userId);
     localStorage.setItem('currentPassword', password);
-    document.getElementById('loginFormContainer').style.display = 'none';
-    document.getElementById('profileFormContainer').style.display = 'block';
+    document.getElementById('loginFormContainer').classList.remove('active');
+    document.getElementById('profileFormContainer').classList.add('active');
   }
 }
 
-function handleProfileSelection() {
-  const profileType = document.getElementById('profile-type').value;
-  
+function selectProfile(profileType) {
   if (!profileType) {
     alert('Por favor selecciona un perfil');
     return;
@@ -39,11 +39,11 @@ function handleProfileSelection() {
   document.getElementById('loginPanel').style.display = 'none';
   
   if (profileType === 'agricultor') {
-    document.getElementById('farmerPanel').style.display = 'block';
+    document.getElementById('farmerPanel').classList.add('active');
   } else if (profileType === 'comprador') {
-    document.getElementById('buyerPanel').style.display = 'block';
+    document.getElementById('buyerPanel').classList.add('active');
   } else if (profileType === 'movilidad') {
-    document.getElementById('mobilityPanel').style.display = 'block';
+    document.getElementById('mobilityPanel').classList.add('active');
   }
 }
 
