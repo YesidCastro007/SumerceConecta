@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Agrícola</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #efe6d5;
+            color: #5c4033;
+        }
+
+        .login-panel,
+        .farmer-panel,
+        .buyer-panel,
+        .mobility-panel {
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .login-panel .button-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .login-button {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            background: #2e7d32;
+            color: #f8f4e9;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-button:hover {
+            background: #1b5e20;
+        }
+
+        .form-container {
+            display: none;
+            max-width: 900px;
+            margin: 2rem auto;
+            background: #f8f4e9;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-panel .form-container {
+            max-width: 600px;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-container h2 {
+            color: #1a3c34;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: bold;
+            color: #5c4033;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #a65c3d;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            background-color: #efe6d5;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a3c34;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 1.2rem;
+            background: #2e7d32;
+            color: #f8f4e9;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 1.5rem;
+        }
+
+        .form-container button:hover {
+            background: #1b5e20;
+        }
+
+        .farmer-panel .product-info {
+            display: none;
+            max-height: 220px;
+            overflow-y: auto;
+            background: #efe6d5;
+            padding: 1.2rem;
+            border: 1px solid #a65c3d;
+            border-radius: 6px;
+            margin-top: 0.6rem;
+            font-size: 1rem;
+            color: #5c4033;
+        }
+
+        .farmer-panel .product-info.active {
+            display: block;
+        }
+
+        .farmer-panel .product-info h4 {
+            color: #1a3c34;
+            margin-bottom: 0.6rem;
+            font-size: 1.2rem;
+        }
+
+        .farmer-panel .product-info p {
+            margin-bottom: 0.6rem;
+        }
+
+        @media (max-width: 600px) {
+            .login-panel .button-container {
+                margin-top: 1rem;
+            }
+
+            .login-button {
+                padding: 1rem 2rem;
+                font-size: 1.2rem;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .form-container h2 {
+                font-size: 1.6rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 900px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="login-panel" id="loginPanel">
+        <div class="button-container">
+            <a class="login-button" onclick="showLoginForm()">Iniciar Sesión / Registrarse</a>
+        </div>
+        <div class="form-container" id="loginFormContainer">
+            <h2>Formulario de Login</h2>
+            <div>
+                <div class="form-group">
+                    <label for="user-id">ID Identificación</label>
+                    <input type="text" id="user-id" placeholder="Ej: usuario123" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+                <button type="submit" onclick="handleLogin()">Iniciar Sesión / Registrarse</button>
+            </div>
+        </div>
+        <div class="form-container" id="profileFormContainer">
+            <h2>¿Quién eres?</h2>
+            <div>
+                <div class="form-group">
+                    <label for="profile-type">Selecciona tu perfil</label>
+                    <select id="profile-type" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="agricultor">Agricultor</option>
+                        <option value="comprador">Comprador</option>
+                        <option value="movilidad">Movilidad</option>
+                    </select>
+                </div>
+                <button type="submit" onclick="handleProfileSelection()">Confirmar</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="farmer-panel" id="farmerPanel" style="display: none;">
+        <div class="form-container" id="farmerFormContainer">
+            <h2>Registro de Datos del Agricultor</h2>
+            <div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="farmer-id">ID del Agricultor</label>
+                        <input type="text" id="farmer-id" placeholder="Ej: AGR123" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="farmer-name">Nombre del Agricultor</label>
+                        <input type="text" id="farmer-name" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Ubicación</label>
+                        <input type="text" id="location" placeholder="Ciudad o municipio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product">Producto a Vender</label>
+                        <select id="product" required>
+                            <option value="">Selecciona un producto</option>
+                            <option value="tomate">Tomate</option>
+                            <option value="cebolla">Cebolla</option>
+                            <option value="papa">Papa</option>
+                            <option value="platano">Plátano</option>
+                            <option value="banano">Banano</option>
+                            <option value="yuca">Yuca</option>
+                            <option value="arroz">Arroz</option>
+                            <option value="cafe">Café</option>
+                        </select>
+                        <div class="product-info" id="product-info"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Cantidad en KG</label>
+                        <input type="number" id="quantity" placeholder="Ej: 100" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Precio de Venta (COP)</label>
+                        <input type="number" id="price" placeholder="Ej: 50000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sale-date">Fecha de Venta</label>
+                        <input type="date" id="sale-date" required>
+                    </div>
+                </div>
+                <button type="submit" onclick="handleFarmerRegistration()">Registrar Datos</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="buyer-panel" id="buyerPanel" style="display: none;">
+        <div class="form-container" id="buyerFormContainer">
+            <h2>Registro de Datos del Comprador</h2>
+            <form id="buyerForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="buyer-id">ID del Comprador</label>
+                        <input type="text" id="buyer-id" placeholder="Ej: COM123" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyer-name">Nombre del Comprador</label>
+                        <input type="text" id="buyer-name" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-method-buyer">Método de Contacto</label>
+                        <select id="contact-method-buyer" required>
+                            <option value="">Selecciona un método</option>
+                            <option value="telefono">Teléfono</option>
+                            <option value="email">Correo Electrónico</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-method">Médio de Transacción</label>
+                        <select id="transaction-method" required>
+                            <option value="">Selecciona un medio</option>
+                            <option value="efectivo">Efectivo</option>
+                            <option value="transferencia">Transferencia Bancaria</option>
+                            <option value="pago-digital">Pago Digital (Nequi/Daviplata)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-interest">¿En qué producto estás interesado en comprar?</label>
+                        <select id="product-interest" required>
+                            <option value="">Selecciona un producto</option>
+                            <option value="tomate">Tomate</option>
+                            <option value="cebolla">Cebolla</option>
+                            <option value="papa">Papa</option>
+                            <option value="platano">Plátano</option>
+                            <option value="banano">Banano</option>
+                            <option value="yuca">Yuca</option>
+                            <option value="arroz">Arroz</option>
+                            <option value="cafe">Café</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit">Registrar Comprador</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="mobility-panel" id="mobilityPanel" style="display: none;">
+        <div class="form-container" id="mobilityFormContainer">
+            <h2>Registro de Servicio de Movilidad</h2>
+            <form id="mobilityForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="driver-id">ID del Conductor</label>
+                        <input type="text" id="driver-id" placeholder="Ej: CON123" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-type">Tipo de Vehículo</label>
+                        <select id="vehicle-type" required>
+                            <option value="">Selecciona un vehículo</option>
+                            <option value="camion">Camión</option>
+                            <option value="furgoneta">Furgoneta</option>
+                            <option value="pickup">Pickup</option>
+                            <option value="refrigerado">Vehículo Refrigerado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="driver-name">Nombre del Conductor</label>
+                        <input type="text" id="driver-name" placeholder="Nombre del conductor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="license-number">Número de Licencia</label>
+                        <input type="text" id="license-number" placeholder="Ej: ABC123456" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="certification">Certificaciones de Seguridad</label>
+                        <select id="certification" required>
+                            <option value="">Selecciona una certificación</option>
+                            <option value="iso39001">ISO 39001 (Seguridad Vial)</option>
+                            <option value="basculante">Certificado de Basculante</option>
+                            <option value="carga_segura">Carga Segura</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-method-mobility">Método de Contacto</label>
+                        <select id="contact-method-mobility" required>
+                            <option value="">Selecciona un método</option>
+                            <option value="telefono">Teléfono</option>
+                            <option value="email">Correo Electrónico</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destino</label>
+                        <input type="text" id="destination" placeholder="Ciudad o dirección" required>
+                    </div>
+                </div>
+                <button type="submit">Solicitar Servicio</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Product data for farmer form
+        const productData = {
+            tomate: {
+                price: "COP 6,400/kg (supermercado, nov 2024)",
+                info: "Los tomates son muy demandados en mercados locales como Paloquemao (Bogotá). Los precios al por mayor son más bajos, alrededor de COP 3,000-4,000/kg. Vende en mercados mayoristas para mejores márgenes. Compara precios entre cadenas como Éxito y D1 para ajustar tu oferta."
+            },
+            cebolla: {
+                price: "COP 5,600/kg (supermercado, nov 2024)",
+                info: "La cebolla tiene precios estables, pero varía por región. En mercados como Bazurto (Cartagena), los precios mayoristas pueden ser COP 2,500-3,500/kg. Ofrece productos frescos y considera promociones para compradores recurrentes."
+            },
+            papa: {
+                price: "COP 3,900/kg (supermercado, nov 2024)",
+                info: "La papa es un producto básico con alta rotación. Los precios mayoristas rondan COP 1,800-2,500/kg. Vende en volumen a supermercados como Surtimax o La 14 para maximizar ganancias. Revisa el IPAP-BMC para tendencias de precios."
+            },
+            platano: {
+                price: "COP 4,900/kg (supermercado, nov 2024)",
+                info: "El plátano mostró un alza del 15.8% en junio 2023 (IPAP-BMC). Los precios mayoristas están entre COP 2,000-3,000/kg. Mercados como Olimpica en la costa Caribe son buenos puntos de venta. Aprovecha promociones semanales."
+            },
+            banano: {
+                price: "COP 4,100/kg (supermercado, nov 2024)",
+                info: "Los bananos son ideales para exportación y mercados locales. Precios mayoristas: COP 1,500-2,500/kg. Considera vender a cadenas como Carulla para productos premium o D1 para precios competitivos."
+            },
+            yuca: {
+                price: "COP 3,200/kg (supermercado, nov 2024)",
+                info: "La yuca tiene buena demanda en regiones como el Valle del Cauca. Precios mayoristas: COP 1,200-2,000/kg. Vende en mercados como La 14 o mayoristas para mejores márgenes. Empaca en cantidades grandes para descuentos."
+            },
+            arroz: {
+                price: "COP 7,500/kg (supermercado, nov 2024)",
+                info: "El arroz tiene precios mayoristas de COP 3,500-5,000/kg, según la variedad. Revisa el SIPSA (DANE) para datos de precios en molinos. Vende a supermercados como Jumbo, que compran en volumen."
+            },
+            cafe: {
+                price: "COP 45,000/kg (supermercado, nov 2024)",
+                info: "El café en grano verde tiene precios mayoristas de COP 20,000-30,000/kg. Vende a cooperativas o exportadores para mejores precios. Mercados como Éxito compran café procesado a precios premium."
+            }
+        };
+
+        // Show login form
+        function showLoginForm() {
+            try {
+                console.log('Attempting to show login form');
+                const buttonContainer = document.querySelector('.login-panel .button-container');
+                const loginFormContainer = document.getElementById('loginFormContainer');
+                if (!buttonContainer || !loginFormContainer) {
+                    throw new Error('Login form elements not found');
+                }
+                buttonContainer.style.display = 'none';
+                loginFormContainer.classList.add('active');
+                console.log('Login form displayed successfully');
+            } catch (error) {
+                console.error('Error showing login form:', error);
+                alert('Error al mostrar el formulario de login. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Handle login/registration
+        function handleLogin() {
+            try {
+                console.log('Handling login');
+                const userId = document.getElementById('user-id').value.trim();
+                const password = document.getElementById('password').value.trim();
+
+                if (!userId || !password) {
+                    alert('Por favor, completa todos los campos.');
+                    console.log('Login failed: Missing fields');
+                    return;
+                }
+
+                let users = JSON.parse(localStorage.getItem('users')) || {};
+
+                if (users[userId]) {
+                    if (users[userId].password === password) {
+                        alert(`Inicio de sesión exitoso\nID Identificación: ${userId}`);
+                        console.log('Login successful for user:', userId);
+                        showProfileForm();
+                    } else {
+                        alert('Contraseña incorrecta.');
+                        console.log('Login failed: Incorrect password');
+                    }
+                } else {
+                    users[userId] = { password: password };
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert(`Registro exitoso\nID Identificación: ${userId}`);
+                    console.log('Registration successful for user:', userId);
+                    showProfileForm();
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('Error al procesar el login o registro. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Show profile selection form
+        function showProfileForm() {
+            try {
+                console.log('Showing profile form');
+                const loginFormContainer = document.getElementById('loginFormContainer');
+                const profileFormContainer = document.getElementById('profileFormContainer');
+                if (!loginFormContainer || !profileFormContainer) {
+                    throw new Error('Profile form elements not found');
+                }
+                loginFormContainer.style.display = 'none';
+                profileFormContainer.classList.add('active');
+                console.log('Profile form displayed successfully');
+            } catch (error) {
+                console.error('Error showing profile form:', error);
+                alert('Error al mostrar el formulario de perfil. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Handle profile selection
+        function handleProfileSelection() {
+            try {
+                console.log('Handling profile selection');
+                const profileType = document.getElementById('profile-type').value;
+                if (!profileType) {
+                    alert('Por favor, selecciona un tipo de perfil.');
+                    console.log('Profile selection failed: No profile selected');
+                    return;
+                }
+
+                document.getElementById('profileFormContainer').style.display = 'none';
+                document.getElementById('loginPanel').style.display = 'none';
+
+                if (profileType === 'agricultor') {
+                    document.getElementById('farmerPanel').style.display = 'block';
+                    document.getElementById('farmerFormContainer').classList.add('active');
+                    initializeFarmerForm();
+                    console.log('Farmer form displayed');
+                } else if (profileType === 'comprador') {
+                    document.getElementById('buyerPanel').style.display = 'block';
+                    document.getElementById('buyerFormContainer').classList.add('active');
+                    initializeBuyerForm();
+                    console.log('Buyer form displayed');
+                } else if (profileType === 'movilidad') {
+                    document.getElementById('mobilityPanel').style.display = 'block';
+                    document.getElementById('mobilityFormContainer').classList.add('active');
+                    initializeMobilityForm();
+                    console.log('Mobility form displayed');
+                }
+            } catch (error) {
+                console.error('Error during profile selection:', error);
+                alert('Error al procesar la selección de perfil. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Handle farmer registration
+        function handleFarmerRegistration() {
+            try {
+                console.log('Handling farmer registration');
+                const farmerId = document.getElementById('farmer-id').value.trim();
+                const farmerName = document.getElementById('farmer-name').value.trim();
+                const location = document.getElementById('location').value.trim();
+                const product = document.getElementById('product').value;
+                const quantity = document.getElementById('quantity').value;
+                const price = document.getElementById('price').value;
+                const saleDate = document.getElementById('sale-date').value;
+
+                if (!farmerId || !farmerName || !location || !product || !quantity || !price || !saleDate) {
+                    alert('Por favor, completa todos los campos.');
+                    console.log('Farmer registration failed: Missing fields');
+                    return;
+                }
+
+                alert(`Registro exitoso:\nID: ${farmerId}\nNombre: ${farmerName}\nProducto: ${product}`);
+                console.log('Farmer registration successful:', { farmerId, farmerName, product });
+            } catch (error) {
+                console.error('Error during farmer registration:', error);
+                alert('Error al registrar los datos del agricultor. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Initialize farmer form
+        function initializeFarmerForm() {
+            try {
+                console.log('Initializing farmer form');
+                const productSelect = document.getElementById('product');
+                const productInfoDiv = document.getElementById('product-info');
+                if (!productSelect || !productInfoDiv) {
+                    throw new Error('Farmer form elements not found');
+                }
+
+                productSelect.addEventListener('change', () => {
+                    const selectedProduct = productSelect.value;
+                    if (selectedProduct && productData[selectedProduct]) {
+                        const data = productData[selectedProduct];
+                        productInfoDiv.innerHTML = `
+                            <h4>Información de ${productSelect.options[productSelect.selectedIndex].text}</h4>
+                            <p><strong>Precio:</strong> ${data.price}</p>
+                            <p>${data.info}</p>
+                        `;
+                        productInfoDiv.classList.add('active');
+                        console.log('Product info displayed for:', selectedProduct);
+                    } else {
+                        productInfoDiv.classList.remove('active');
+                        productInfoDiv.innerHTML = '';
+                        console.log('Product info cleared');
+                    }
+                });
+                console.log('Farmer form initialized successfully');
+            } catch (error) {
+                console.error('Error initializing farmer form:', error);
+                alert('Error al inicializar el formulario de agricultor. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Initialize buyer form
+        function initializeBuyerForm() {
+            try {
+                console.log('Initializing buyer form');
+                const buyerForm = document.getElementById('buyerForm');
+                if (!buyerForm) {
+                    throw new Error('Buyer form not found');
+                }
+
+                buyerForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const buyerId = document.getElementById('buyer-id').value.trim();
+                    const buyerName = document.getElementById('buyer-name').value.trim();
+                    const contactMethod = document.getElementById('contact-method-buyer').value;
+                    const transactionMethod = document.getElementById('transaction-method').value;
+                    const productInterest = document.getElementById('product-interest').value;
+
+                    if (!buyerId || !buyerName || !contactMethod || !transactionMethod || !productInterest) {
+                        alert('Por favor, completa todos los campos.');
+                        console.log('Buyer registration failed: Missing fields');
+                        return;
+                    }
+
+                    alert(`Datos del comprador registrados exitosamente:\nID: ${buyerId}\nNombre: ${buyerName}\nProducto: ${productInterest}`);
+                    console.log('Buyer registration successful:', { buyerId, buyerName, productInterest });
+                });
+                console.log('Buyer form initialized successfully');
+            } catch (error) {
+                console.error('Error initializing buyer form:', error);
+                alert('Error al inicializar el formulario de comprador. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Initialize mobility form
+        function initializeMobilityForm() {
+            try {
+                console.log('Initializing mobility form');
+                const mobilityForm = document.getElementById('mobilityForm');
+                if (!mobilityForm) {
+                    throw new Error('Mobility form not found');
+                }
+
+                mobilityForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const driverId = document.getElementById('driver-id').value.trim();
+                    const vehicleType = document.getElementById('vehicle-type').value;
+                    const driverName = document.getElementById('driver-name').value.trim();
+                    const licenseNumber = document.getElementById('license-number').value.trim();
+                    const certification = document.getElementById('certification').value;
+                    const contactMethod = document.getElementById('contact-method-mobility').value;
+                    const destination = document.getElementById('destination').value.trim();
+
+                    if (!driverId || !vehicleType || !driverName || !licenseNumber || !certification || !contactMethod || !destination) {
+                        alert('Por favor, completa todos los campos.');
+                        console.log('Mobility registration failed: Missing fields');
+                        return;
+                    }
+
+                    alert(`Solicitud de servicio de movilidad registrada exitosamente:\nID: ${driverId}\nConductor: ${driverName}\nDestino: ${destination}`);
+                    console.log('Mobility registration successful:', { driverId, driverName, destination });
+                });
+                console.log('Mobility form initialized successfully');
+            } catch (error) {
+                console.error('Error initializing mobility form:', error);
+                alert('Error al inicializar el formulario de movilidad. Por favor, revisa la consola del navegador e intenta de nuevo.');
+            }
+        }
+
+        // Ensure DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded');
+            const loginButton = document.querySelector('.login-button');
+            if (loginButton) {
+                loginButton.addEventListener('click', showLoginForm);
+                console.log('Login button event listener added');
+            } else {
+                console.error('Login button not found');
+                alert('Error: Botón de login no encontrado. Revisa la consola.');
+            }
+        });
+    </script>
+</body>
+
+</html>
