@@ -1,7 +1,6 @@
 function showLoginForm() {
-  const loginForm = document.getElementById('loginFormContainer');
-  loginForm.classList.add('active');
-  document.querySelector('.login-button').style.display = 'none';
+  document.getElementById('initialButton').style.display = 'none';
+  document.getElementById('loginFormContainer').classList.add('active');
 }
 
 function handleLogin() {
@@ -31,59 +30,54 @@ function handleLogin() {
 }
 
 function selectProfile(profileType) {
-  if (!profileType) {
-    alert('Por favor selecciona un perfil');
-    return;
-  }
+  document.getElementById('profileFormContainer').classList.remove('active');
   
-  document.getElementById('loginPanel').style.display = 'none';
-  
-  if (profileType === 'agricultor') {
-    document.getElementById('farmerPanel').classList.add('active');
-  } else if (profileType === 'comprador') {
-    document.getElementById('buyerPanel').classList.add('active');
-  } else if (profileType === 'movilidad') {
-    document.getElementById('mobilityPanel').classList.add('active');
+  if (profileType === 'campesino') {
+    document.getElementById('campesinoPanel').classList.add('active');
+  } else if (profileType === 'consumidor') {
+    document.getElementById('consumidorPanel').classList.add('active');
+  } else if (profileType === 'transportador') {
+    document.getElementById('transportadorPanel').classList.add('active');
   }
 }
 
-function saveFarmer() {
-  const name = document.getElementById('farmer-name').value;
-  const location = document.getElementById('farmer-location').value;
-  const products = document.getElementById('farmer-products').value;
+function saveCampesino() {
+  const name = document.getElementById('campesino-name').value;
+  const location = document.getElementById('campesino-location').value;
+  const products = document.getElementById('campesino-products').value;
   
   if (!name || !location || !products) {
     alert('Por favor completa todos los campos');
     return;
   }
   
-  saveUser('agricultor', { name, location, products });
+  saveUser('campesino', { name, location, products });
 }
 
-function saveBuyer() {
-  const name = document.getElementById('buyer-name').value;
-  const business = document.getElementById('buyer-business').value;
-  const location = document.getElementById('buyer-location').value;
+function saveConsumidor() {
+  const name = document.getElementById('consumidor-name').value;
+  const business = document.getElementById('consumidor-business').value;
+  const location = document.getElementById('consumidor-location').value;
   
   if (!name || !business || !location) {
     alert('Por favor completa todos los campos');
     return;
   }
   
-  saveUser('comprador', { name, business, location });
+  saveUser('consumidor', { name, business, location });
 }
 
-function saveMobility() {
-  const name = document.getElementById('mobility-name').value;
-  const vehicle = document.getElementById('mobility-vehicle').value;
-  const plate = document.getElementById('mobility-plate').value;
+function saveTransportador() {
+  const name = document.getElementById('transportador-name').value;
+  const vehicle = document.getElementById('transportador-vehicle').value;
+  const plate = document.getElementById('transportador-plate').value;
   
   if (!name || !vehicle || !plate) {
     alert('Por favor completa todos los campos');
     return;
   }
   
-  saveUser('movilidad', { name, vehicle, plate });
+  saveUser('transportador', { name, vehicle, plate });
 }
 
 function saveUser(profileType, data) {

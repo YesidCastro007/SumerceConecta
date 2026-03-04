@@ -12,7 +12,7 @@
 </head>
 <body>
   <section class="login-panel" id="loginPanel">
-    <div class="button-container">
+    <div class="button-container" id="initialButton">
       <a class="login-button" onclick="showLoginForm()">🌾 Iniciar Sesión / Registrarse</a>
     </div>
     
@@ -30,75 +30,75 @@
     </div>
     
     <div class="form-container" id="profileFormContainer">
-      <h2>¿Quién eres?</h2>
+      <h2>Selecciona tu rol</h2>
       <div class="profile-cards">
-        <div class="profile-card" onclick="selectProfile('agricultor')">
+        <div class="profile-card" onclick="selectProfile('campesino')">
           <div class="profile-icon">👨🌾</div>
-          <h3>Agricultor</h3>
+          <h3>Campesino</h3>
           <p>Vende tus productos directamente</p>
         </div>
-        <div class="profile-card" onclick="selectProfile('comprador')">
+        <div class="profile-card" onclick="selectProfile('consumidor')">
           <div class="profile-icon">🛒</div>
-          <h3>Comprador</h3>
+          <h3>Consumidor</h3>
           <p>Compra productos frescos del campo</p>
         </div>
-        <div class="profile-card" onclick="selectProfile('movilidad')">
+        <div class="profile-card" onclick="selectProfile('transportador')">
           <div class="profile-icon">🚚</div>
-          <h3>Movilidad</h3>
+          <h3>Transportador</h3>
           <p>Transporta productos agrícolas</p>
         </div>
       </div>
     </div>
   </section>
-  <section class="form-container" id="farmerPanel">
-    <h2>👨🌾 Registro Agricultor</h2>
+  <section class="form-container" id="campesinoPanel">
+    <h2>👨🌾 Registro Campesino</h2>
     <div class="form-group">
-      <label for="farmer-name">Nombre Completo</label>
-      <input type="text" id="farmer-name" placeholder="Juan Pérez" required />
+      <label for="campesino-name">Nombre Completo</label>
+      <input type="text" id="campesino-name" placeholder="Juan Pérez" required />
     </div>
     <div class="form-group">
-      <label for="farmer-location">Ubicación</label>
-      <input type="text" id="farmer-location" placeholder="Vereda El Rosal, Santander" required />
+      <label for="campesino-location">Ubicación</label>
+      <input type="text" id="campesino-location" placeholder="Vereda El Rosal, Santander" required />
     </div>
     <div class="form-group">
-      <label for="farmer-products">Productos que cultiva</label>
-      <input type="text" id="farmer-products" placeholder="Café, Plátano, Yuca" required />
+      <label for="campesino-products">Productos que cultiva</label>
+      <input type="text" id="campesino-products" placeholder="Café, Plátano, Yuca" required />
     </div>
-    <button onclick="saveFarmer()">Registrar Agricultor</button>
+    <button onclick="saveCampesino()">Registrar Campesino</button>
   </section>
 
-  <section class="form-container" id="buyerPanel">
-    <h2>🛒 Registro Comprador</h2>
+  <section class="form-container" id="consumidorPanel">
+    <h2>🛒 Registro Consumidor</h2>
     <div class="form-group">
-      <label for="buyer-name">Nombre Completo</label>
-      <input type="text" id="buyer-name" placeholder="María González" required />
+      <label for="consumidor-name">Nombre Completo</label>
+      <input type="text" id="consumidor-name" placeholder="María González" required />
     </div>
     <div class="form-group">
-      <label for="buyer-business">Nombre del Negocio</label>
-      <input type="text" id="buyer-business" placeholder="Distribuidora El Campo" required />
+      <label for="consumidor-business">Nombre del Negocio</label>
+      <input type="text" id="consumidor-business" placeholder="Distribuidora El Campo" required />
     </div>
     <div class="form-group">
-      <label for="buyer-location">Ubicación</label>
-      <input type="text" id="buyer-location" placeholder="Bucaramanga, Santander" required />
+      <label for="consumidor-location">Ubicación</label>
+      <input type="text" id="consumidor-location" placeholder="Bucaramanga, Santander" required />
     </div>
-    <button onclick="saveBuyer()">Registrar Comprador</button>
+    <button onclick="saveConsumidor()">Registrar Consumidor</button>
   </section>
 
-  <section class="form-container" id="mobilityPanel">
-    <h2>🚚 Registro Movilidad</h2>
+  <section class="form-container" id="transportadorPanel">
+    <h2>🚚 Registro Transportador</h2>
     <div class="form-group">
-      <label for="mobility-name">Nombre Completo</label>
-      <input type="text" id="mobility-name" placeholder="Carlos Rodríguez" required />
+      <label for="transportador-name">Nombre Completo</label>
+      <input type="text" id="transportador-name" placeholder="Carlos Rodríguez" required />
     </div>
     <div class="form-group">
-      <label for="mobility-vehicle">Tipo de Vehículo</label>
-      <input type="text" id="mobility-vehicle" placeholder="Camión 3.5 toneladas" required />
+      <label for="transportador-vehicle">Tipo de Vehículo</label>
+      <input type="text" id="transportador-vehicle" placeholder="Camión 3.5 toneladas" required />
     </div>
     <div class="form-group">
-      <label for="mobility-plate">Placa</label>
-      <input type="text" id="mobility-plate" placeholder="ABC-123" required />
+      <label for="transportador-plate">Placa</label>
+      <input type="text" id="transportador-plate" placeholder="ABC-123" required />
     </div>
-    <button onclick="saveMobility()">Registrar Transportista</button>
+    <button onclick="saveTransportador()">Registrar Transportador</button>
   </section>
   <script src="formulario.js"></script>
 </body>
