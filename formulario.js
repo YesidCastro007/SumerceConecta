@@ -3,6 +3,14 @@ function showLoginForm() {
   document.getElementById('loginFormContainer').classList.add('active');
 }
 
+// Prevenir múltiples retrocesos en el historial
+if (window.history && window.history.pushState) {
+    window.history.pushState('forward', null, window.location.href);
+    window.addEventListener('popstate', function() {
+        window.history.pushState('forward', null, window.location.href);
+    });
+}
+
 function handleLogin() {
   const userId = document.getElementById('user-id').value;
   const password = document.getElementById('password').value;

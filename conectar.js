@@ -53,6 +53,14 @@ const products = [
 // Carrito de compras
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Prevenir múltiples retrocesos en el historial
+if (window.history && window.history.pushState) {
+    window.history.pushState('forward', null, window.location.href);
+    window.addEventListener('popstate', function() {
+        window.history.pushState('forward', null, window.location.href);
+    });
+}
+
 // Mostrar productos
 function displayProducts(filteredProducts) {
     const productsContainer = document.getElementById('products');

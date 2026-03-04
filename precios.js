@@ -2,6 +2,14 @@
 let isSpeaking = false;
 let currentUtterance = null;
 
+// Prevenir múltiples retrocesos en el historial
+if (window.history && window.history.pushState) {
+    window.history.pushState('forward', null, window.location.href);
+    window.addEventListener('popstate', function() {
+        window.history.pushState('forward', null, window.location.href);
+    });
+}
+
 // Cargar datos desde localStorage o usar datos por defecto
 const fallbackData = [
     { name: "Tomate", type: "verdura", city: "bogota", priceMin: 2500, priceMax: 3500, unit: "kg" },
