@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Campesino - SumerceConecta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="conectar.css" />
+</head>
+<body>
+    <header>
+        <h1>🛒 Mercado Campesino</h1>
+        <p>Productos frescos directo del campo a tu mesa</p>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <h2>🔍 Busca tus productos</h2>
+            <input type="text" id="search" placeholder="Buscar tomates, aguacates, café..." />
+        </section>
+
+        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;">
+            <section>
+                <div class="products-grid" id="products"></div>
+            </section>
+
+            <aside>
+                <section class="cart-section" id="cart-section">
+                    <h2>🛒 Tu Carrito</h2>
+                    <div class="cart-items" id="cart-items">
+                        <p style="text-align: center; color: #8b6f47; padding: 2rem;">Tu carrito está vacío</p>
+                    </div>
+                    <div class="cart-total" id="cart-total">Total: $0</div>
+                    <div class="cart-buttons">
+                        <button class="btn-clear" onclick="clearCart()">🗑️ Vaciar</button>
+                        <button class="btn-checkout" onclick="proceedToOrder()">✅ Pagar</button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <p>🌾 SumerceConecta - Conectando el campo con la ciudad</p>
+        <p>📞 Contáctanos: +57 300 123 4567 | 📧 info@sumerceconecta.com</p>
+    </footer>
+
+    <script src="conectar.js"></script>
+</body>
+</html>
