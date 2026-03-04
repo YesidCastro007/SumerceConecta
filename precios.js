@@ -1,4 +1,8 @@
-// Datos de referencia (fallback cuando la API no está disponible)
+// Estado de la síntesis de voz
+let isSpeaking = false;
+let currentUtterance = null;
+
+// Cargar datos desde localStorage o usar datos por defecto
 const fallbackData = [
     { name: "Tomate", type: "verdura", city: "bogota", priceMin: 2500, priceMax: 3500, unit: "kg" },
     { name: "Cebolla Cabezona", type: "verdura", city: "bogota", priceMin: 2000, priceMax: 3000, unit: "kg" },
@@ -95,16 +99,50 @@ function renderTable(typeFilter = 'all', cityFilter = 'all') {
     });
 }
 
-// Escuchar precios
+// Escuchar precios con control de reproducción
 document.getElementById('speakButton').addEventListener('click', () => {
-    const utterance = new SpeechSynthesisUtterance();
-    let text = 'Precios oficiales de productos agrícolas: ';
-    currentData.slice(0, 5).forEach(item => {
-        text += `${item.name}, desde ${item.priceMin.toLocaleString('es-CO')} hasta ${item.priceMax.toLocaleString('es-CO')} pesos por ${item.unit}. `;
-    });
-    utterance.text = text;
-    utterance.lang = 'es-ES';
-    speechSynthesis.speak(utterance);
+    const button = document.getElementById('speakButton');
+    
+    if (isSpeaking) {
+        // Detener la reproducción
+        speechSynthesis.cancel();
+        isSpeaking = false;
+        button.textContent = '🔊 Escuchar Precios';
+        button.style.background = 'linear-gradient(135deg, #5a7c3e 0%, #4a6c2e 100%)';
+    } else {
+        // Iniciar la reproducción
+        currentUtterance = new SpeechSynthesisUtterance();
+        let text = 'Precios oficiales de productos agrícolas: ';
+        currentData.slice(0, 5).forEach(item => {
+            text += `${item.name}, desde ${item.priceMin.toLocaleString('es-CO')} hasta ${item.priceMax.toLocaleString('es-CO')} pesos por ${item.unit}. `;
+        });
+        
+        currentUtterance.text = text;
+        currentUtterance.lang = 'es-ES';
+        currentUtterance.rate = 0.9;
+        currentUtterance.pitch = 1.1;
+        
+        // Obtener voces disponibles y seleccionar una femenina
+        const voices = speechSynthesis.getVoices();
+        const spanishVoice = voices.find(voice => 
+            voice.lang.startsWith('es') && voice.name.includes('Female')
+        ) || voices.find(voice => voice.lang.startsWith('es'));
+        
+        if (spanishVoice) {
+            currentUtterance.voice = spanishVoice;
+        }
+        
+        currentUtterance.onend = () => {
+            isSpeaking = false;
+            button.textContent = '🔊 Escuchar Precios';
+            button.style.background = 'linear-gradient(135deg, #5a7c3e 0%, #4a6c2e 100%)';
+        };
+        
+        speechSynthesis.speak(currentUtterance);
+        isSpeaking = true;
+        button.textContent = '⏸️ Detener';
+        button.style.background = 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)';
+    }
 });
 
 // Filtros
@@ -121,6 +159,13 @@ document.getElementById('filterCity').addEventListener('change', (e) => {
 // Inicializar
 document.addEventListener('DOMContentLoaded', () => {
     displayDate();
+    
+    // Cargar voces cuando estén disponibles
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = () => {
+            speechSynthesis.getVoices();
+        };
+    }
     
     // Cargar datos guardados o obtener nuevos
     const savedData = localStorage.getItem('preciosOficiales');
