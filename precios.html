@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precios Diarios - SumerceConecta</title>
+    <title>Precios Oficiales - SumerceConecta</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -11,45 +11,34 @@
 </head>
 <body>
     <div class="container">
-        <h1>💰 Precios del Día</h1>
+        <h1>💰 Precios Oficiales del Día</h1>
         <div class="date-display" id="dateDisplay"></div>
+        <div class="source-info">
+            <p>📊 Fuente: Sistema de Información de Precios y Abastecimiento del Sector Agropecuario (SIPSA)</p>
+            <button id="refreshButton" class="btn-update" onclick="fetchPrices()">🔄 Actualizar Precios</button>
+        </div>
         
         <div class="controls">
             <select id="filterType" aria-label="Filtrar por tipo de producto">
                 <option value="all">Todos los productos</option>
                 <option value="fruta">Frutas</option>
                 <option value="verdura">Verduras</option>
-                <option value="insumo">Insumos</option>
+                <option value="tuberculo">Tubérculos</option>
+                <option value="cereal">Cereales</option>
             </select>
-            <button id="updateButton" class="btn-update" onclick="toggleUpdateForm()">✏️ Actualizar Precios</button>
+            <select id="filterCity" aria-label="Filtrar por ciudad">
+                <option value="all">Todas las ciudades</option>
+                <option value="bogota">Bogotá</option>
+                <option value="medellin">Medellín</option>
+                <option value="cali">Cali</option>
+                <option value="bucaramanga">Bucaramanga</option>
+            </select>
             <button id="speakButton">🔊 Escuchar Precios</button>
         </div>
 
-        <div class="update-form" id="updateForm">
-            <h3 style="color: #5a7c3e; margin-bottom: 1rem;">➕ Agregar/Actualizar Producto</h3>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="productName">Nombre del Producto</label>
-                    <input type="text" id="productName" placeholder="Ej: Tomate" required />
-                </div>
-                <div class="form-group">
-                    <label for="productType">Tipo</label>
-                    <select id="productType" required>
-                        <option value="fruta">Fruta</option>
-                        <option value="verdura">Verdura</option>
-                        <option value="insumo">Insumo</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="productPrice">Precio (COP)</label>
-                    <input type="number" id="productPrice" placeholder="5000" required />
-                </div>
-                <div class="form-group">
-                    <label for="productUnit">Unidad</label>
-                    <input type="text" id="productUnit" placeholder="kg" required />
-                </div>
-            </div>
-            <button onclick="addOrUpdateProduct()" style="width: 100%; margin-top: 1rem;">✔️ Guardar Producto</button>
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Cargando precios oficiales...</p>
         </div>
 
         <div class="table-wrapper">
@@ -57,14 +46,22 @@
                 <thead>
                     <tr>
                         <th>🌾 Producto</th>
-                        <th>🏷️ Tipo</th>
-                        <th>💵 Precio</th>
+                        <th>🏷️ Categoría</th>
+                        <th>📍 Ciudad</th>
+                        <th>💵 Precio Mínimo</th>
+                        <th>💵 Precio Máximo</th>
                         <th>📊 Unidad</th>
                     </tr>
                 </thead>
                 <tbody id="priceTableBody">
                 </tbody>
             </table>
+        </div>
+
+        <div class="api-info">
+            <h3>📌 Información sobre los datos</h3>
+            <p>Los precios mostrados son referenciales y provienen de fuentes oficiales del sector agropecuario colombiano. Se actualizan diariamente según la disponibilidad de datos del SIPSA (Sistema de Información de Precios y Abastecimiento del Sector Agropecuario) del DANE.</p>
+            <p><strong>Nota:</strong> En caso de no disponibilidad de la API oficial, se muestran precios de referencia actualizados manualmente.</p>
         </div>
     </div>
 
